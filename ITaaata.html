@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tata Cars Showcase</title>
+  <style>
+    :root {
+      --primary: #1f2937;
+      --accent: #007bff;
+      --light: #f3f4f6;
+      --dark: #111827;
+      --text-light: #e5e7eb;
+      --card-bg: #ffffff;
+    }
+
+    body.dark-mode {
+      --primary: #f3f4f6;
+      --accent: #7c3aed;
+      --light: #1f2937;
+      --dark: #e5e7eb;
+      --text-light: #111827;
+      --card-bg: #1f2937;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--light);
+      color: var(--primary);
+      transition: background-color 0.4s, color 0.4s;
+    }
+
+    header {
+      background: linear-gradient(120deg, #007bff, #00c6ff);
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background-color: var(--primary);
+      color: var(--text-light);
+    }
+
+    nav .toggle-btn {
+      background-color: var(--accent);
+      border: none;
+      padding: 0.5rem 1rem;
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 2rem;
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .card h2 {
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .booking {
+      max-width: 600px;
+      margin: 2rem auto;
+      background-color: var(--card-bg);
+      padding: 2rem;
+      border-radius: 10px;
+    }
+
+    .booking input, .booking select, .booking button {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .booking button {
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: var(--primary);
+      color: var(--text-light);
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.7);
+    }
+
+    .modal-content {
+      background-color: var(--card-bg);
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      color: var(--primary);
+    }
+
+    .close {
+      float: right;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* Mobile Optimizations */
+    @media (max-width: 768px) {
+      header {
+        padding: 1.5rem 1rem;
+      }
+
+      nav {
+        padding: 1rem;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .container {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+      }
+
+      .booking {
+        padding: 1.5rem;
+      }
+
+      .modal-content {
+        width: 100%;
+        padding: 15px;
+      }
+
+      .booking input, .booking select, .booking button {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tata Cars Showcase</h1>
+    <p>Explore premium Tata vehicles and book your drive today!</p>
+  </header>
+
+  <nav>
+    <div><strong>Tata Motors</strong></div>
+    <button class="toggle-btn" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  </nav>
+
+  <div class="container">
+    <div class="card" onclick="openModal('Harrier')">
+      <img src="https://imgd.aeplcdn.com/664x374/n/cw/ec/129421/harrier-exterior-right-front-three-quarter-3.jpeg" alt="Tata Harrier">
+      <h2>Tata Harrier</h2>
+    </div>
+
+    <div class="card" onclick="openModal('Altroz')">
+      <img src="https://imgd.aeplcdn.com/664x374/n/cw/ec/137109/altroz-exterior-right-front-three-quarter.jpeg" alt="Tata Altroz">
+      <h2>Tata Altroz</h2>
+    </div>
+
+    <div class="card" onclick="openModal('Safari')">
+      <img src="https://imgd.aeplcdn.com/664x374/n/cw/ec/128765/safari-exterior-right-front-three-quarter-4.jpeg" alt="Tata Safari">
+      <h2>Tata Safari</h2>
+    </div>
+  </div>
+
+  <div class="booking">
+    <h2>Book a Test Drive</h2>
+    <form onsubmit="event.preventDefault(); alert('Booking confirmed!');">
+      <input type="text" placeholder="Your Name" required />
+      <input type="tel" placeholder="Phone Number" required />
+      <input type="email" placeholder="Email Address" required />
+      <select required>
+        <option value="">Choose a Car</option>
+        <option value="Harrier">Harrier</option>
+        <option value="Altroz">Altroz</option>
+        <option value="Safari">Safari</option>
+      </select>
+      <input type="date" required />
+      <button type="submit">Book Now</button>
+    </form>
+  </div>
+
+  <footer>
+    <p>Contact us: 122122212</p>
+    <p>Made by Aryamann Rao</p>
+  </footer>
+
+  <div id="carModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div id="modalDetails"></div>
+    </div>
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    const carData = {
+      Harrier: {
+        title: "Tata Harrier",
+        desc: "The Tata Harrier is a bold and rugged SUV built for adventures. Featuring a powerful Kryotec engine and terrain response modes.",
+        price: "₹15 - ₹24 Lakhs",
+        colors: ["Red", "White", "Grey", "Black"]
+      },
+      Altroz: {
+        title: "Tata Altroz",
+        desc: "The Tata Altroz is India's safest hatchback with a 5-star Global NCAP rating. It's stylish, practical, and fun to drive.",
+        price: "₹6 - ₹10 Lakhs",
+        colors: ["Blue", "Gold", "Silver", "Black"]
+      },
+      Safari: {
+        title: "Tata Safari",
+        desc: "The Tata Safari is a spacious and premium SUV perfect for family road trips. Comes loaded with features and safety tech.",
+        price: "₹16 - ₹25 Lakhs",
+        colors: ["White", "Green", "Blue", "Black"]
+      }
+    };
+
+    function openModal(carName) {
+      const data = carData[carName];
+      const modal = document.getElementById("carModal");
+      const content = `
+        <h2>${data.title}</h2>
+        <p><strong>Description:</strong> ${data.desc}</p>
+        <p><strong>Price Range:</strong> ${data.price}</p>
+        <p><strong>Available Colors:</strong> ${data.colors.join(", ")}</p>
+      `;
+      document.getElementById("modalDetails").innerHTML = content;
+      modal.style.display = "block";
+    }
+
+    function closeModal() {
+      document.getElementById("carModal").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById("carModal");
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
+  </script>
+</body>
+</html>
